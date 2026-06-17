@@ -11,18 +11,16 @@
 
 ## Установка
 
-Библиотека распространяется через приватный репозиторий GitHub. Для установки нужен [Personal Access Token (PAT)](https://github.com/settings/tokens) с правом `repo`.
-
-### pip / requirements.txt
+### pip
 
 ```bash
-pip install "corelib @ git+https://<TOKEN>@github.com/ORG/corelib.git@v0.1.0"
+pip install git+https://github.com/Eurasia-Group-Kazakhstan/corelib.git@v0.1.0
 ```
 
-Или в `requirements.txt` (токен из переменной окружения):
+### requirements.txt
 
 ```
-corelib @ git+https://${GITHUB_TOKEN}@github.com/ORG/corelib.git@v0.1.0
+corelib @ git+https://github.com/Eurasia-Group-Kazakhstan/corelib.git@v0.1.0
 ```
 
 ### Poetry
@@ -30,25 +28,17 @@ corelib @ git+https://${GITHUB_TOKEN}@github.com/ORG/corelib.git@v0.1.0
 ```toml
 # pyproject.toml
 [tool.poetry.dependencies]
-corelib = {git = "https://github.com/ORG/corelib.git", tag = "v0.1.0"}
-```
-
-Для аутентификации:
-
-```bash
-poetry config http-basic.github <username> <TOKEN>
+corelib = {git = "https://github.com/Eurasia-Group-Kazakhstan/corelib.git", tag = "v0.1.0"}
 ```
 
 ### В CI (GitHub Actions)
 
 ```yaml
 - name: Install dependencies
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   run: pip install -r requirements.txt
 ```
 
-> Замените `ORG` на название организации/аккаунта GitHub, `v0.1.0` — на нужный тег релиза.
+> Замените `v0.1.0` на нужный тег релиза.
 
 ---
 
