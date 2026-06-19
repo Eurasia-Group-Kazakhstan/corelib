@@ -3,6 +3,7 @@ from __future__ import annotations
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
+from fastapi.openapi.utils import get_openapi
 
 from .auth import KeycloakTokenVerifier
 from .middleware import AuthMiddleware
@@ -68,5 +69,43 @@ def create_app(
         service_key=service_key,
         verifier=verifier,
     )
+
+    def _custom_openapi():
+        if app.openapi_schema:
+            return app.openapi_schema
+        schema = get_openapi(
+            title=display_name,
+            version=version,
+            description=description,
+            routes=app.routes,
+        )
+        schema.setdefault("components", {}).setdefault("securitySchemes", {}).update({
+            "ServiceKey": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "X-Service-Key",
+                "description": "Общий ключ доступа к сервису",
+            },
+            "CallerType": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "X-Caller-Type",
+                "description": "Тип вызывающей стороны: user, User, backend, Backend",
+            },
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "description": "JWT-токен Keycloak (только для X-Caller-Type: user)",
+            },
+        })
+        security = [{"ServiceKey": [], "CallerType": [], "BearerAuth": []}]
+        for path_item in schema.get("paths", {}).values():
+            for operation in path_item.values():
+                if isinstance(operation, dict):
+                    operation.setdefault("security", security)
+        app.openapi_schema = schema
+        return schema
+
+    app.openapi = _custom_openapi
 
     return app
