@@ -9,6 +9,7 @@ from .auth import KeycloakTokenVerifier
 
 _VALID_CALLER_TYPES = {"user", "User", "backend", "Backend"}
 _USER_CALLER_TYPES = {"user", "User"}
+_PUBLIC_PATHS = {"/docs", "/redoc", "/openapi.json"}
 
 
 class AuthMiddleware(BaseHTTPMiddleware):
@@ -23,6 +24,9 @@ class AuthMiddleware(BaseHTTPMiddleware):
         self._verifier = verifier
 
     async def dispatch(self, request: Request, call_next):
+        if request.url.path in _PUBLIC_PATHS:
+            return await call_next(request)
+
         x_service_key = request.headers.get("X-Service-Key")
         if x_service_key != self._service_key:
             return JSONResponse(
