@@ -105,3 +105,11 @@ def test_user_expired_jwt(app):
             })
     assert resp.status_code == 401
     assert resp.json()["detail"] == "Token has expired"
+
+
+@pytest.mark.parametrize("path", ["/docs", "/redoc", "/openapi.json"])
+def test_docs_accessible_without_auth(client, path):
+    resp = client.get(path)
+    assert resp.status_code != 403
+    assert resp.status_code != 422
+    assert resp.status_code != 401
