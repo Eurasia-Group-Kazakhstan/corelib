@@ -8,7 +8,7 @@ import httpx
 
 from .schemas import ServiceRegistrationPayload
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("uvicorn.error")
 
 
 @dataclasses.dataclass

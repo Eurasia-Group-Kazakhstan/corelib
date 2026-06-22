@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import logging
 from contextlib import asynccontextmanager
+from importlib.metadata import version as _pkg_version
 
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
@@ -51,8 +53,21 @@ def create_app(
         issuer=keycloak_issuer,
     )
 
+    _log = logging.getLogger("uvicorn.error")
+
     @asynccontextmanager
     async def lifespan(application: FastAPI):
+        try:
+            corelib_ver = _pkg_version("corelib")
+        except Exception:
+            corelib_ver = "unknown"
+        _log.info(
+            "corelib v%s | starting service '%s' v%s | registry: %s",
+            corelib_ver,
+            name,
+            version,
+            registry_url,
+        )
         await register_service(application.openapi(), registry_config)
         yield
         await deregister_service(registry_config)
