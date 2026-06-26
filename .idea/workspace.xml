@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/corelib/factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/corelib/factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/corelib/registry.py" beforeDir="false" afterPath="$PROJECT_DIR$/corelib/registry.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +79,9 @@
       <workItem from="1781863748189" duration="304000" />
       <workItem from="1782118387672" duration="43000" />
       <workItem from="1782122283242" duration="66000" />
-      <workItem from="1782123015895" duration="330000" />
+      <workItem from="1782123015895" duration="674000" />
+      <workItem from="1782128250028" duration="101000" />
+      <workItem from="1782470954058" duration="499000" />
     </task>
     <servers />
   </component>

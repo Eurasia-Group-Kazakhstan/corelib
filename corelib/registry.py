@@ -21,6 +21,7 @@ class RegistryConfig:
     path_prefix: str
     version: str
     registry_url: str
+    deregistry_url: str
     service_key: str
 
 
@@ -64,7 +65,7 @@ async def register_service(
 
 
 async def deregister_service(config: RegistryConfig) -> None:
-    url = f"{config.registry_url.rstrip('/')}/{config.name}"
+    url = config.deregistry_url
 
     async with httpx.AsyncClient() as client:
         try:

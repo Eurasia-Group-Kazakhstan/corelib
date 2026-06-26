@@ -22,6 +22,7 @@ def create_app(
     path_prefix: str = "",
     version: str = "1.0.0",
     registry_url: str,
+    deregistry_url: str,
     service_key: str,
     keycloak_server_url: str,
     keycloak_realm: str,
@@ -40,6 +41,7 @@ def create_app(
         path_prefix=path_prefix,
         version=version,
         registry_url=registry_url,
+        deregistry_url=deregistry_url,
         service_key=service_key,
     )
 
